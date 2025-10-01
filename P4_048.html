@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kalkulator Pengulangan</title>
+    </head>
+    <body>
+        <h1>Kalkulator Pengulangan P4_048</h1>
+
+        <!-- Form untuk mmemmasukan array angka -->
+        <label for="inputArray">Masukan angka (Pisahkan dengan koma) : </label>
+        <input
+            type="text"
+            id="inputArray"
+            placeholder="contoh : 10, 20, 30, 40, 50"
+        />
+        <button onclick="hitungDanTampilkan()">Hitung</button>
+
+        <!-- area untuk menampilkan hasil -->
+        <div id="result"></div>
+
+        <script>
+            //fungsi untuk menghitung rata rata array menggunakn fungsi panah
+            const hitungRataRata = (arr) => {
+                const total = arr.reduce((acc, val) => acc + val, 0);
+                return total / arr.length;
+            };
+
+            // fungsi untuk menghitung jumlah angka yang lebih besar dari rata rata
+            const hitungLebihBesarRata = (arr) => {
+                const ratarata = hitungRataRata(arr); //memanggil fungsi hitung rata rata
+                //menggunakan metode filter untuk menemukan angka di atas rata rata
+                const angkaDiatasRatRata = arr.filer((val) => val > ratarata);
+                return angkaDiatasRatRata.length; // mengembalikan jumlah elemen di atasa rata rata
+            };
+
+            //fungsi untuk menghitung dan menampilkan hasil
+            function hitungDanTampilkan() {
+                const input = document.getElementById("inputArray").value;
+                //memisahkan inout menjadi array angka
+                const array = input
+                    .split(",")
+                    .map((num) => parseFloat(num.trim()));
+
+                //menghitung hail menggunakan fungsi yang sudah dibuat
+                const ratarata = hitungRataRata(array);
+                const jumlahLebihBesar = hitungLebihBesarRata(array);
+
+                //menampilkan hasil perhitungan
+                document.getElementById("result").innerHTML = `
+                <p>Array Angka : [${array.join(",")}]</p>
+                <p>Rata Rata : ${ratarata.toFixed(2)}</p>
+                <p>Jumlah Angka dia Atas Rata Rata  : ${jumlahLebihBesar}</p>
+                `;
+            }
+        </script>
+    </body>
+</html>

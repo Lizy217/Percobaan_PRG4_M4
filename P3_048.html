@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Daftar Tugas</title>
+    </head>
+    <body>
+        <h1>Daftar Tugas - P3_048</h1>
+        <!--Form untuk menambah tugas -->
+        <input type="text" id="inputTugas" placeholder="Masukan Tugas" />
+        <button onclick="tambahTugas()">Tambah Tugas</button>
+
+        <!--tombol untuk menapmpilkan daftar tugas -->
+        <button onclick="tampilkanTugas()">Tampilkan Daftar Tugas</button>
+
+        <!--Daftar Tugas -->
+        <ul id="listTugas" style="display: none"></ul>
+
+        <script>
+            //deklarasi array untuk menyimpan tugas
+            let daftarTugas = [];
+
+            //fungi untuk menambahkan tugas
+            function tambahTugas() {
+                const input = document.getElementById("inputTugas");
+                const tugas = input.value.trim(); //digunakan untuk menghapus spasi berlebih pada awal dan akhir
+
+                if (tugas) {
+                    //memastikan input tidak kosong
+                    daftarTugas.push(tugas); //menambahkan tugas ke dalam array
+                    console.log(`Tugas "${tugas}" berhasil ditambahkan.`); //menggunaan backtick bukan petik satu
+                    input.value = ""; // digunakan untuk membersihkan inputan
+                    alert(`Tugas "${tugas}" berhasil dutambahkan`); // menampilkan notifikasi
+                } else {
+                    alert("Masukan tugas yang valid !"); // apabila inputan kosong
+                }
+            }
+
+            // fungsi untuk enampilkan tugas
+            function tampilkanTugas() {
+                const list = document.getElementById("listTugas");
+                list.innerHTML = ""; //membersihkan daftar sbelum ditampilkan
+
+                if (daftarTugas.length === 0) {
+                    list.innerHTML = "<li> Tidak ada tugas </li>"; //menampilkan pesan apabila tidak ada tugas
+                } else {
+                    daftarTugas.forEach((tugas, index) => {
+                        //membuat element list untuk setiap tugas
+                        const li = document.createElement("li");
+                        li.textContent = tugas; // menghapus penomoran
+                        const btnHapus = document.createElement("button");
+                        btnHapus.textContent = "Hapus";
+                        btnHapus.onclick = () => hapusTugas(index + 1);
+                        li.appendChild(btnHapus);
+                        list.appendChild(li);
+                    });
+                }
+                //tampilkan daftar hanya saat tombol ditekan
+                list.style.display = "block";
+            }
+
+            //fungsi untuk menghapus tugas berdasarkan indeks
+            function hapusTugas(indeks) {
+                if (indeks > 0 && indeks <= daftarTugas.length) {
+                    const tugasTerhapus = daftarTugas.splice(indeks - 1, 1);
+                    console.log(`Tugas "${tugasTerhapus}" berhasil dihapus`);
+                    alert(`Tugas "${tugasTerhapus}"berhasil dihapus `);
+                    tampilkanTugas(); //memperbaruon tamilan setelah penghapusan
+                } else {
+                    alert("indeks tugas tidak valid");
+                }
+            }
+        </script>
+    </body>
+</html>
